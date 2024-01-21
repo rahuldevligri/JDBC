@@ -1,25 +1,32 @@
 package com.jdbc.project;
 
 import java.sql.*;
+
+import DAOLayer.ConnectionProvider;
+
 import java.io.*;
 
 public class d_insetDataDynamicInput_PreparedStatement {
-    public static void main(String[] args) {
-        try {
-            // load the Driver...
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // create Connection..
-            String url = "jdbc:mysql://localhost:3306/jdbc";
-            String username = "root";
-            String password = "4642";
-            Connection con = DriverManager.getConnection(url, username, password);
-
+    public static void main(String[] args)throws Exception {
+//        try {
+    	
+//            // load the Driver...
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//
+//            // create Connection..
+//            String url = "jdbc:mysql://localhost:3306/jdbc";
+//            String username = "root";
+//            String password = "4642";
+//            Connection con = DriverManager.getConnection(url, username, password);
+ 
+            //create Connection...
+            Connection c = ConnectionProvider.getConnection();
             // create a dynamic query
             String q = "insert into table1(tName,tCity) values (?,?)";
 
             // get the PreparedStatement object...
-            PreparedStatement pstmt = con.prepareStatement(q);
+            //PreparedStatement pstmt = con.prepareStatement(q);
+            PreparedStatement pstmt = c.prepareStatement(q);
 
             // taking input from user using BufferReader class.....
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -36,8 +43,10 @@ public class d_insetDataDynamicInput_PreparedStatement {
             pstmt.executeUpdate();
 
             System.out.println("Insearted....");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            c.close();
+            
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 }
